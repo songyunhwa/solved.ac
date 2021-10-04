@@ -1,5 +1,5 @@
 import java.io.*;
-class test {
+class Main {
   
     public static void main(String[] args) throws IOException{
 
@@ -20,7 +20,7 @@ class test {
   
             for(int i=2; i<=cnt*2; i++) {
                 if(dp[i] == 0)
-                for(int j=i+i; j<=cnt*2; j+=j) {
+                for(int j=i+i; j<=cnt*2; j+=i) {
                     dp[j] = 1;
                 }
             }
