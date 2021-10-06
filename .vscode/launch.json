@@ -6,16 +6,9 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Launch main",
+            "name": "Launch",
             "request": "launch",
-            "mainClass": "main",
-            "projectName": "test_ed07197c"
-        },
-        {
-            "type": "java",
-            "name": "Launch Test",
-            "request": "launch",
-            "mainClass": "Test",
+            "mainClass": "Main",
             "projectName": "test_ed07197c"
         },
         {
@@ -30,13 +23,6 @@
             "name": "Launch test",
             "request": "launch",
             "mainClass": "test",
-            "projectName": "test_ed07197c"
-        },
-        {
-            "type": "java",
-            "name": "Launch Solution",
-            "request": "launch",
-            "mainClass": "Solution",
             "projectName": "test_ed07197c"
         },
         {
