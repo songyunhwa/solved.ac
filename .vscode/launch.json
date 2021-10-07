@@ -6,9 +6,9 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Launch",
+            "name": "Launch main",
             "request": "launch",
-            "mainClass": "Main",
+            "mainClass": "main",
             "projectName": "test_ed07197c"
         },
         {

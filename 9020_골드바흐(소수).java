@@ -1,31 +1,29 @@
-// StringTokenizer 사용해야 넘어감...
-import java.io.*;
-import java.util.*;
-class 누적합 {
-
+public class 9020_골드바흐(소수) {
     public static void main(String[] args) throws IOException{
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        int n = Integer.parseInt(br.readLine());
-        StringTokenizer str = new StringTokenizer(br.readLine());
-        int[] arr =new int[n];
+
+        int[] arr =new int[10001];
         arr[1] = 0;
         arr[2] = 0;
-        for(int i=2; i<n; i++){
+        for(int i=2; i<=10000; i++){
             if(arr[i] == 0)
-            for(int j=i+i; j<n; j+=i) {
+            for(int j=i+i; j<=10000; j+=i) {
                 arr[j] =1;
             }
         }
         int[] result = new int[2];
+
+        int n = Integer.parseInt(br.readLine());
         for(int i=0; i<n; i++) {
-            int now = Integer.parseInt(str.nextToken());
+            int now = Integer.parseInt(br.readLine());
             result[0] = 0;
-            result[1] = 0;
-            for(int j=0; j<n; j++) {
+            result[1] = now;
+            for(int j=1; j<=now; j++) {
                 if(arr[j] == 0 && arr[now-j] == 0) {
-                    if(result[1] - result[0] > now-2*j ) {
+                    if(now-(2*j) >= 0)
+                    if(result[1] - result[0] > now-(2*j) ) {
                         result[1] = now-j;
                         result[0] = j;
                     }
@@ -39,4 +37,3 @@ class 누적합 {
     }
     
 }
-

@@ -1,5 +1,5 @@
 import java.io.*;
-class Main {
+class 베르트랑 공준 {
   
     public static void main(String[] args) throws IOException{
 
