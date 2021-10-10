@@ -1,8 +1,5 @@
-import java.util.*;
-import java.io.*;
-class Main {
-   
-
+public class 2110_공유기검색(이분탐색) {
+    
     public static void main(String[] args) throws IOException{
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -41,6 +38,4 @@ class Main {
         System.out.println(mid);
         
     }
-    
-
 }
