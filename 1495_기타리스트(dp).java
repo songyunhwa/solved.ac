@@ -1,16 +1,6 @@
-import java.util.*;
-import java.io.*;
-class Main {
+// 처음에 bfs로 풀려고 했는데 dp가 훨씬 간단했음.
+public class 1495_기타리스트(dp) {
     
-    public static class now{
-        int value;
-        int cnt;
-        public now(int v, int c){
-            this.value=v;
-            this.cnt = c;
-        }
-    }
-  
     public static void main(String[] args) throws IOException{
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -44,7 +34,6 @@ class Main {
             return;
             }
         }
+        System.out.println(-1);
     }
-    
-
 }
