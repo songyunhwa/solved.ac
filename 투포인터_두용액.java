@@ -1,6 +1,7 @@
-import java.io.*;
-import java.util.*;
-class Main {
+public class 투포인터_두용액 {
+    	// 두용액
+	// 투포인터
+	// /양쪽 끝에서 출발한 두 포인터가 서로 반대 방향으로 다가와서 좁혀지는 형태의 투포인터 알고리즘이다. start -> <- end 요렇게!
 	
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -33,7 +34,7 @@ class Main {
 			}
 		}	
 
-		System.out.println(r2 + " " + r1);
+		System.out.println(r1 + " " + r2);
 
 	}
 }
