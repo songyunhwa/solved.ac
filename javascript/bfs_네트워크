@@ -1,0 +1,32 @@
+var visit;
+ var q= [];
+function find (computers) {
+    while(q.length != 0) {
+        var n = q.shift();
+       
+        
+        for(let i=0; i< visit.length; i++){
+            if(visit[i] == 0 && computers[n][i] == 1) {
+              visit[i] = 1;
+                q.push(i);
+            }
+        }
+    }
+}
+function solution(n, computers) {
+    var answer = 0;
+    
+    visit = new Array(n).fill(0);
+    
+    for(let i=0; i<n; i++){
+        console.log(visit);
+        if(visit[i] == 0) {
+            
+            q.push(i);
+            visit[i] = 1;
+            answer++;
+            find( computers);
+        }
+    }
+    return answer;
+}

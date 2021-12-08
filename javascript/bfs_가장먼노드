@@ -1,0 +1,37 @@
+let visit = [];
+let len =2000;
+
+function solution(n, edge) {
+    var answer = 0;
+    var answer_len = 0;
+    var list= [];
+    list = Array.from({length:n+1}, () => []);
+    visit = new Array(n+1).fill(false);
+    edge.forEach((e) => {
+        list[e[0]].push(e[1]);
+        list[e[1]].push(e[0]);
+    })
+    var q = [];
+
+    q.push([1 , 0]);
+    let i =1; 
+    while(q.length!=0){
+        let cur=q.shift();
+        if(cur[0] != 1){ //도착지가 1이 아니라면
+        if(answer_len < cur[1]) { // 더 크면
+            answer_len = cur[1];
+            answer=0;
+        }
+        if(answer_len == cur[1]) { // 같으면
+            answer++;
+        }
+        }
+        for(let k=0;k<list[cur[0]].length;k++){
+            let next=list[cur[0]][k];
+            if(visit[next])continue;
+            visit[next]=true;
+            q.push([next, cur[1] +1]); // bfs 로 다음거롤 계속 지나감.
+        }
+    }
+    return answer;
+}
