@@ -1,0 +1,44 @@
+import java.io.*;
+import java.util.*;
+class Main {
+	// String 을 갖고 풀면 메모리 초과가 난다.
+	// 그래서 Stack 을 사용해야함.
+	// 그래도 메모리 초과 => int[] 에다가 넣고 확인하네
+	public static void main(String[] args) throws Exception {
+		//int rows, int columns, int[][] connections, int[][] queries
+		//int[] result = solution(rows, columns, connections, queries);
+
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String input = br.readLine();
+		String input1 = br.readLine();
+
+		String result = "";
+		Stack<Character> st = new Stack<Character>();
+		for(int i=0; i<input.length(); i++){
+			st.push(input.charAt(i));
+			boolean eq = false;
+			if(st.peek() == input1.charAt(input1.length()-1) && st.size()>=input1.length()){
+					for(int j=0; j<input1.length(); j++) {
+						if(st.get(st.size()-input1.length()+j) == input1.charAt(j)) {
+							if(j == input1.length()-1){
+								eq = true;
+							}
+							
+						}else break;
+					}
+			}
+			if(eq){
+				for(int k=0; k<input1.length(); k++){
+					st.pop();
+				}
+			}
+		}
+		if(st.size()==0){
+			System.out.println("FRULA");
+			return;
+		}
+		for(int k=0; k<st.size(); k++) result += st.get(k);
+		System.out.println(result);
+	
+	}
+}

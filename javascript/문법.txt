@@ -1,0 +1,120 @@
+정수로 만들기
+Math.floor()
+
+
+--
+문자열 비교
+
+   let cmp = aa.localeCompare(bb);
+        if(a[0]!= b[0]){
+            return cmp; => 앞에 있는 걸 뺴주면 점점 커지는 것.
+        }
+
+--
+문자열 대소문자 구분없이 비교
+stringA.toUpperCase()
+
+--
+숫자인지 판단
+
+isNaN() => 문자열이라는 것.
+
+--
+String 위치
+indexOf() 
+
+--
+문자 -> 숫자
+parseInt(string, radix)
+parseFloat(string)
+
+--
+숫자? -> 문자열로
+String( object )
+
+--
+문자열 배열로 나누기 
+  let list= s.replace("{{", "").replace("}}", "").split("},{");
+
+str.split('},{').map(v => v.replace(/\{|\}/g, "")).map(v => v.split(',').map(v => +v));
+
+
+---
+이중배열
+1.  유동배열
+       const graph = [];
+        for (let i = 0; i <= N; i++) {
+          graph.push([]);
+        }
+
+2.
+    list = Array.from({length:n+1}, () => []);
+ edge.forEach((e) => {
+        list[e[0]].push(e[1]);
+        list[e[1]].push(e[0]);
+    })
+	
+	
+일차원 배열
+배열은 if(array) 이런식으로 하면 무조건 true
+    list = [];
+    list = new Array(n).fill(0);
+
+배열 포함했는지 확인
+includes()
+
+-
+  songs_cnt.push({
+                genre :song.genre,
+                play : song.play
+            })
+-
+fruits.forEach(function (item, index, array) {
+  console.log(item, index)
+})
+- songs.map((d) => {} );
+- songs_cnt.find(play => song[genre] == play[genre]);
+
+
+--
+최솟값 최댓값 비교
+Math.max
+Math.min
+
+---
+정렬
+pq.sort((a,b)=>{
+                    return a[1]- b[1];
+                });
+pq.shift();
+
+
+---
+
+맵
+
+
+var map = new Map();
+
+--
+스택
+let stack = new Stack();
+stack.push(1); // arr: [1], index: 1
+stack.pop();
+--
+큐
+var queue = [];
+queue.push(2);         // enqueue
+var i = queue.shift(); // dequeue
+queue.splice(i, 1);
+alert(i);
+queue.indexOf();
+
+--
+배열 내 최댓값 최솟값
+Math.max.apply(null, queue);
+Math.min.apply(null, queue);
+
+--
+split
+let arr = op.split(" ");

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 public static class Node implements Comparable<Node> {
     int end;
     int weight;
@@ -76,4 +77,84 @@ public static void main(String[] args) throws Exception {
 
    int ans = (res1 >= max && res2 >= max) ? -1 : Math.min(res1, res2);
     System.out.println(ans);
+=======
+public static class Node implements Comparable<Node> {
+    int end;
+    int weight;
+ 
+    Node(int end, int weight) {
+        this.end = end;
+        this.weight = weight;
+    }
+ 
+    @Override
+    public int compareTo(Node o) {
+        return weight - o.weight;
+    }
+ 
+}
+public static int max = 200000000;
+public static int n;
+public static int dik(int i, int j) {
+
+    int[] visit = new int[n + 1];
+    Arrays.fill(visit, max);
+
+    PriorityQueue<Node> q = new PriorityQueue<>();
+    q.add(new Node(i, 0));
+    visit[i]=0;
+    while(!q.isEmpty()){
+        Node now = q.poll();
+        ArrayList<Node> arr1 = arr.get(now.end);
+
+        for(int k=0; k<arr1.size(); k++){
+            if(visit[arr1.get(k).end]>visit[now.end] + arr1.get(k).weight){
+                visit[arr1.get(k).end]=visit[now.end] + arr1.get(k).weight;
+                q.add(new Node(arr1.get(k).end, visit[arr1.get(k).end]));
+            }
+        }
+    }
+    return visit[j];
+}
+public static ArrayList<ArrayList<Node>> arr ;
+public static void main(String[] args) throws Exception {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    String[] input = br.readLine().split(" ");
+    n = Integer.parseInt(input[0]);
+    int m = Integer.parseInt(input[1]);
+
+
+    arr = new ArrayList<ArrayList<Node>>();
+    for(int i=0; i<=n; i++)
+         arr.add(new ArrayList<Node>()); 
+    for(int i=0; i<m; i++){
+        input = br.readLine().split(" ");
+        for(int j=0; j<3; j++){
+            int a = Integer.parseInt(input[0]);	
+            int b = Integer.parseInt(input[1]);	
+            int c = Integer.parseInt(input[2]);	
+
+            arr.get(a).add(new Node(b,c));
+            arr.get(b).add(new Node(a,c));
+        }
+    }
+    input = br.readLine().split(" ");
+    int i = Integer.parseInt(input[0]);
+    int j = Integer.parseInt(input[1]);
+
+   // 1 -> v1 -> v2 -> N으로 가는 경우
+   int res1 = 0;
+   res1 += dik(1, i);
+   res1 += dik(i, j);
+   res1 += dik(j, n);
+
+   // 1 -> v2 -> v1 -> N으로 가는 경우
+   int res2 = 0;
+   res2 += dik(1, j);
+   res2 += dik(j, i);
+   res2 += dik(i, n);
+
+   int ans = (res1 >= max && res2 >= max) ? -1 : Math.min(res1, res2);
+    System.out.println(ans);
+>>>>>>> 563d5e0a9a8f30f65833f8ecc5da3517685ce4d1
 }
