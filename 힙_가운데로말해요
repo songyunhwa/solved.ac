@@ -1,0 +1,33 @@
+import java.io.*;
+import java.util.*;
+class test {
+
+	public static void test(String[] args) throws ㅁException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int n = Integer.parseInt(br.readLine());
+		
+		// 1 2 3
+		PriorityQueue<Integer> minHeap = new PriorityQueue<>((o1, o2) -> o1 - o2);
+        // 6 5 4
+		PriorityQueue<Integer> maxHeap = new PriorityQueue<>((o1, o2) -> o2 - o1);
+		StringBuilder sb = new StringBuilder();
+		for(int i=0; i<n; i++){
+			int now = Integer.parseInt(br.readLine());
+			// 둘이 크기가 같으면 maxHeap 에 넣음
+			if(minHeap.size() == maxHeap.size()){
+				maxHeap.add(now);
+			}else minHeap.add(now);
+
+			if(!minHeap.isEmpty() && !maxHeap.isEmpty()){
+				// minHeap 이 더 작으면 서로 바꿔치기.
+				if(minHeap.peek() < maxHeap.peek()){
+					int temp = minHeap.poll();
+					minHeap.add(maxHeap.poll());
+					maxHeap.add(temp);
+				}	
+			}
+			sb.append(maxHeap.peek() + "\n");      
+		}
+		System.out.println(sb);
+	}
+}
