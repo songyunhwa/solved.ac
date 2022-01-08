@@ -1,0 +1,77 @@
+
+import java.io.*;
+import java.util.*;
+import java.util.Map.Entry;
+class Main {
+    public static int k;
+    public static String[] arr;
+    public static ArrayList<String> list;
+    public static int res=0;
+    public static void count(int[] arr1){
+        int result =0 ;
+        for(int i=0; i<arr.length; i++){
+            int cnt=0;
+            for(int j=0; j<arr[i].length(); j++){
+                int now = list.indexOf(arr[i].substring(j, j+1));
+                if(arr1[now] == 1 || arr[i].substring(j, j+1).equals("a")
+                || arr[i].substring(j, j+1).equals("n") 
+                || arr[i].substring(j, j+1).equals("t") 
+                || arr[i].substring(j, j+1).equals("i")
+                || arr[i].substring(j, j+1).equals("c") 
+                ) {
+                    cnt++;
+                }
+            }
+            if(cnt == arr[i].length()){
+                result++;
+            }
+        }
+        res = Math.max(res, result);
+    }
+    public static void backtraking(int[] arr1 , int cnt){
+        if(cnt == k)
+        count(arr1);
+
+
+        for(int j=0; j<arr1.length; j++){
+            if(arr1[j] == 0) {
+                arr1[j]= 1;
+                backtraking(arr1, cnt+1);
+            }
+        }
+    }
+   public static void main(String[] args) throws Exception {
+      BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+      String[] str = br.readLine().split(" ");
+        int n = Integer.parseInt(str[0]);
+         k = Integer.parseInt(str[1]) - 5;
+        if(k<0) {
+            System.out.println(0);
+            return;
+        }
+
+        arr = new String[n];
+         list = new ArrayList<>();
+
+        for(int i=0; i<n; i++){
+            String ss =br.readLine();
+            String s ="";
+            for(int j=4; j<ss.length(); j++){
+                if(ss.substring(j,ss.length()).equals("tica")){
+                    break;
+                }
+                else {
+                    if(!list.contains(ss.substring(j,j+1)))
+                    list.add(ss.substring(j,j+1)); 
+                    s += ss.substring(j,j+1);
+                 }
+            }
+
+            arr[i] = s;
+        }
+        int[] visit = new int[list.size()];
+
+        backtraking(visit, 0);
+        System.out.println(res);
+   }
+}
