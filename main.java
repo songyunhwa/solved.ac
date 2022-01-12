@@ -1,45 +1,14 @@
+
+
 import java.io.*;
 import java.util.*;
 class Main {
-	public static int[] prime;
-	public static ArrayList<Integer> arr =new ArrayList<>();
-	public static void getDecimal(){
-	    prime = new int[4000000];
-		arr.add(1);
-		for(int i=2; i<4000000; i++){
-			if(prime[i] == 0){
-			for(int j=i*2 ; j<4000000; j+=i){
-				prime[j] = 1;
-			}
-			if(i!= 2)
-			arr.add(i);
-			}
-		}
-	}
+
 	public static void main(String[] args) throws Exception {
 	
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int n = Integer.parseInt(br.readLine());
-		int result = 0;
-		getDecimal();
-		int cnt =0;
+		String s = br.readLine();
 	
-		int st=0;
-		int end=0;
-		while(end <= n){
-			if(cnt <n){
-				cnt += arr.get(end);
-				end++;
-				continue;
-			}
-
-			if(cnt == n)result++;
-
-			cnt-= arr.get(st);
-			st++;
-
-		
-		}
-		System.out.println(result);
+		System.out.println(s.length());
 	}
 }

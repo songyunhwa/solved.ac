@@ -1,0 +1,51 @@
+/*
+public static void main(String[] args) throws Exception {
+	
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String s = br.readLine();
+		HashMap<String, String> map = new HashMap<>();
+		map.put("c=", "c");
+		map.put("c-",  "c");
+		map.put("dz=", "dz");
+		map.put("d-", "d");
+		map.put("lj", "lj");
+		map.put("nj", "nj");
+		map.put("s=",  "s");
+		map.put("z=",  "z");
+		String sub= "";
+		int result=0;
+		for(int i=0; i<s.length(); i++){
+			sub+= s.substring(i, i+1);
+			if(map.containsKey(sub)){
+				result++;
+				sub="";
+			}
+			if(sub.length() > 1)
+			if(map.containsKey(sub.substring(1, sub.length()))){
+				result+=2;
+				sub="";
+			}
+		}
+		if(sub.length() > 0) result += sub.length();
+		System.out.println(result);
+	}
+*/
+replace 를 이용해서 푸는 것이었다..
+
+import java.io.*;
+import java.util.*;
+class Main {
+
+	public static void main(String[] args) throws Exception {
+	
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String s = br.readLine();
+		String[] ca = new String[] { "c=", "c-", "dz=", "d-", "lj", "nj", "s=", "z=" };
+
+		for(String c : ca) {
+			s = s.replaceAll(c, " ");
+
+		}
+		System.out.println(s.length());
+	}
+}
