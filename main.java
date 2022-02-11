@@ -1,46 +1,32 @@
 
 import java.io.*;
 import java.util.*;
+
+import javax.tools.JavaFileManager.Location;
 class Main {
-	public static int n;
-	public static int result ;
-	public static void check(String[][] arr ) {
-		for(int i=0; i<n; i++){
-			int cnt = 1;
-			for(int j=1; j<n; j++){
-				// 행마다
-				result = Math.max(result ,cnt);
-				if(arr[i][j-1].equals(arr[i][j])){
-					cnt++;
-				}else cnt=0;
-			}
+
+		public static int solution(int m, int n, int[][] puddles) {
+			int answer = 0;
+			int[][] dir = new int[m+1][n+1];
+
+			for (int[] puddle : puddles)
+				dir[puddle[0] - 1][puddle[1] - 1] = -1;
+
+			for(int i=1; i<m; i++){
+				for(int j=1; j<n; j++){
+					if(dir[i][j] != -1){
+						dir[i][j] = Math.min(dir[i-1][j] , dir[i][j-1]) +1;
+						dir[i][j]  %=1000000007;
+					}
+				}
 			
-			cnt = 1;
-			for(int j=1; j<n; j++){
-				result = Math.max(result ,cnt);
-				if(arr[j-1][i].equals(arr[j][i])){
-						cnt++;
-				}else cnt=0;
 			}
-		
+			return dir[m-1][n-1] %1000000007;
 		}
-	}
-   	public static void main(String[] args) throws Exception {
 	
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		 n = Integer.parseInt(br.readLine());
-		String[][] arr = new String[n][n];
-		for(int i=0; i<n; i++){
-			String str = br.readLine();
-			for(int j=0; j<n; j++){
-				arr[i][j] = str.substring(j,j+1);
-			}
-		}
-		 result =0;
-		
-		 /// 위아래로 바꿔주고 
-		///check 함수 불러주면됨..
-		// 어렵게 생각안하고 정말 구현만 해주면 됬음.
+   	public static void main(String[] args) throws Exception {
+		int[][] pad = new int[2][2];
+		int result = solution(4, 3, pad);
 		System.out.println(result);
 	}
 }
