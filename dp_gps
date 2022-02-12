@@ -1,0 +1,37 @@
+import java.util.*;
+class Solution {
+	public static int solution(int n, int m, int[][] edge_list, int k, int[] gps_log) {
+        int answer = 0;
+     ArrayList<ArrayList<Integer>> arr = new ArrayList<ArrayList<Integer>>();
+
+		for(int i=0; i<=n; i++){
+			arr.add(new ArrayList<>());
+		}
+		for(int i=0; i<edge_list.length; i++){
+			arr.get(edge_list[i][0]).add(edge_list[i][1]);
+			arr.get(edge_list[i][1]).add(edge_list[i][0]);
+		}
+		int[][] dp = new int[k][n+1]; //gps_log 가 0부터 시작하지 않음.
+          
+        for(int i = 0; i < dp.length; i++) {
+            Arrays.fill(dp[i], 987654321);
+        }
+		dp[0][gps_log[0]] = 0;
+		for(int i=1; i<k; i++){ // gps_log 확인
+			for(int j=1; j<=n; j++){ //모든 노드 확인
+				//경로가 오는 것의 최소 오류를 가져오기.
+				dp[i][j] = Math.min(dp[i][j] , dp[i-1][j]);
+				
+				for(int node : arr.get(j)){
+					dp[i][j]= Math.min(dp[i][j] , dp[i-1][node]);
+				}
+				if(j!= gps_log[i]) dp[i][j]++; //gps_log 경로가 같지 않다면 +1
+			}
+		}
+		if(dp[k-1][gps_log[k-1]] >=987654321){
+			return -1;
+		}else 
+        return dp[k-1][gps_log[k-1]];
+    }
+	
+}
