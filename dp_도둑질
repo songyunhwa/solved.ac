@@ -1,0 +1,32 @@
+class Solution {
+    public int solution(int[] money) {
+        int answer = 0;
+        
+        int[] dp = new int[money.length]; // 집을 털경우
+        dp[0] = money[0];
+        
+        int[] dp1 = new int[money.length]; // 집을 털지 않을 경우
+        dp1[1] =money[1];
+        for(int i=2; i< money.length; i++){
+            if(money.length-1 != i){
+                dp[i] = Math.max(dp[i-2] + money[i], dp[i-1]);
+                if(i >= 3){ // 전전 것까지도 고려해야함.
+                    dp[i] = Math.max(dp[i-3] + money[i], dp[i]);
+                }
+            }else dp[i] =Math.max(dp[i-1],dp[i-2]); // 맨앞에랑 맞닿으면 안됨.
+            
+           
+            dp1[i] = Math.max(dp1[i-2] + money[i], dp1[i-1] ); 
+            if(i>=3)  // 전전 것까지도 고려해야함.
+                dp1[i] = Math.max(dp1[i-3] + money[i], dp1[i]);
+        }
+        
+        
+        answer= Math.max(dp[money.length-1], dp1[money.length-1]);
+        //세개일 때면 세번쨰만 선택할 수 있음.
+        if(money.length == 3 )
+        answer = Math.max(answer , money[2]);
+        
+        return answer;
+    }
+}

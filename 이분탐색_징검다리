@@ -1,11 +1,8 @@
+//최솟 값중 최대 !!! 정닶 뽑아낼때 if 문 기억하기..
 
-import java.io.*;
 import java.util.*;
-import java.util.*;
-
-import javax.tools.JavaFileManager.Location;
-class Main {
-	public static int solution(int distance, int[] rocks, int n) {
+class Solution {
+    public int solution(int distance, int[] rocks, int n) {
         int answer = 0;
         int start = 1;
         int end = distance;
@@ -23,27 +20,19 @@ class Main {
                 }else  prev = rocks[i]; // 아니면 돌맹이를 빼지 않기.
             }
             if(distance - prev < mid) rock++;
-            System.out.println(rock + "  :  " + mid + "  " + start + "  "  + end);
-		
-            if(rock >= n){ // 돌을 너무 많이 뽑았다면 최솟값을 줄여야 함
-				answer = end;
+            System.out.println(rock + "  :  " + mid);
+            
+	
+            if(rock > n){ // 돌을 너무 많이 뽑았다면 최솟값을 늘여야 함 
                 end = mid-1;
-				
             }else {
                 start = mid+1;
-		
+                answer = mid;
             }
             
         }
         
         return answer;
     }
-	
-   	public static void main(String[] args) throws Exception {
-		int[] arr = {6,7,8,9};
-
-		int result = solution(10, arr, 3);
-
-		System.out.println(result);
-	}
+    
 }
