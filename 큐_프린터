@@ -1,0 +1,62 @@
+
+import java.io.*;
+import java.util.*;
+
+class Main {
+
+
+	public static class line implements Comparable<line>{
+			int num;
+			int lo;
+			public line(int num, int lo){
+				this.num = num;
+				this.lo = lo;
+			}
+			@Override
+			public int compareTo(line h2){
+				if(this.num > h2.num){
+					return -1;
+				}else return 1;
+			}
+		}
+		public static int solution(int[] priorities, int location) {
+			int answer = 0;
+			
+			Queue<line> q = new LinkedList<>();
+			ArrayList<Integer> arr = new ArrayList<>();
+			for(int i=0; i<priorities.length; i++){
+				arr.add(priorities[i]);
+				q.offer(new line(priorities[i], i));
+			}
+			Collections.sort(arr, Comparator.reverseOrder());
+			
+			int result = 0;
+			int i=0;
+			
+			while(!q.isEmpty()){
+			   line f = q.poll();
+				
+				if(f.num >= arr.get(i)){
+					if(f.lo == location){
+						answer = result+1;
+						return answer;
+					}
+					result++;
+					i++;
+					
+					continue;
+				}else {
+					q.offer(f);
+				}
+			}
+			return answer;
+		}
+	
+   	public static void main(String[] args) throws Exception {
+		int[] arr = 	{1, 1, 9, 1, 1, 1};
+
+		int result = solution(arr, 0);
+
+		System.out.println(result);
+	}
+}

@@ -1,0 +1,45 @@
+import java.util.*;
+class Solution {
+public static int[] visit ;
+	public static class line{
+		int x;
+		int y;
+		public line(int x, int y){
+			this.x =x ;
+			this.y= y;
+		}
+	
+	}
+
+	public static void dfs(int i, int j, int[][] computers){
+		Stack<line> st = new Stack<>();
+		st.push(new line(i,j));
+		while(!st.isEmpty()){
+			line f =st.pop();
+			
+			for(int t=0; t< computers.length; t++){
+				if(computers[f.y][t] == 1 && visit[t] == 0){
+					visit[t] = visit[f.y];
+					st.push(new line(f.y, t));
+				}
+			}
+		
+
+		}
+	}
+	public static int solution(int n, int[][] computers) {
+        int answer = 1;
+		visit = new int[computers.length];
+		for(int i=0; i<computers.length; i++){
+			for(int j=0; j<computers[0].length; j++){
+				if(computers[i][j] != 0 && (visit[i] == 0 || visit[j] == 0)){
+					visit[i] = answer;
+					visit[j] = answer++;
+					dfs(i,j, computers);
+
+				}
+			}
+		}
+        return answer-1;
+    }
+}

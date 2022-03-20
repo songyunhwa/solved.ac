@@ -1,0 +1,112 @@
+import java.util.*;
+class Solution {
+		public static int[][] visit;
+	public static int[][] dir = {{-1, 0}, {1, 0}, {0, 1}, {0, -1}};
+	public static int[] parent;
+
+	public static class lines {
+		int cnt;
+		int cnt1;
+		int height;
+		public lines(int cnt, int cnt1, int height){
+			this.cnt = cnt;
+			this.cnt1 = cnt1;
+			this.height = height;
+		}
+
+	}
+	public static void bfs(int[][] land, int x1, int y1, int height){
+        Queue<lines> q= new LinkedList<>();
+        q.add(new lines(x1,y1, 0));
+        
+        while(!q.isEmpty()){
+		lines first = q.poll();
+        int x= first.cnt;
+        int y=first.cnt1;
+            for(int i=0 ; i<4 ; i++){
+			int a = x+ dir[i][0];
+			int b=  y+ dir[i][1];
+	
+			if(a>=0 && a<land.length && b>=0 && b<land[0].length)
+			if(Math.abs(land[x][y] - land[a][b]) <= height ){
+				if(visit[a][b] == 0 || visit[a][b] != visit[x][y]) {
+				visit[a][b] = visit[x][y];
+				q.add(new lines(a,b, 0));
+				}
+			}
+		}
+        }
+	}
+	
+	private static int findParent(int a) {
+		if (a == parent[a]) {
+			return a;
+		}
+		return parent[a] = findParent(parent[a]);
+	}
+	public static boolean spanning(lines f){
+		int a= findParent(f.cnt);
+		int b= findParent(f.cnt1);
+
+        if(a == b) return false;
+        if (a < b){
+			parent[b] = a; //항상 큰 인자가 작은 인자를 부모로 가짐
+		}
+	    else parent[a] = b;
+
+		return true;
+	}
+	public static int solution(int[][] land, int height) {
+        int answer = 0;
+		int cnt=1;
+		ArrayList<lines> li = new ArrayList<lines>();
+		visit = new int[land.length][land[0].length];
+		
+		for(int i=0; i<land.length; i++){
+			for(int j=0; j<land[0].length; j++){
+				if(visit[i][j] == 0){
+					visit[i][j] = cnt;
+					bfs(land, i, j, cnt);
+					cnt++;
+				}
+			}
+		}
+
+		for(int i=0; i<land.length; i++){
+			for(int j=0; j<land[0].length; j++){
+				for(int t=0 ; t<4 ; t++){
+					int a = i+ dir[t][0];
+					int b=  j+ dir[t][1];
+			
+					if(a>=0 && a<land.length && b>=0 && b<land[0].length)
+					if(visit[i][j] != visit[a][b]){
+						lines l = new lines(visit[i][j] , visit[a][b], Math.abs(land[i][j] - land[a][b]) );
+						li.add(l);
+					}
+				}
+			}
+		}
+
+		Collections.sort(li, new Comparator<lines>() {
+			@Override
+			public int compare(lines i1, lines i2) {
+				if(i1.height < i2.height) return -1;
+                else return 1;
+			}
+		});
+		parent = new int[cnt+1];
+		for(int i=0; i<=cnt; i++){
+			parent[i] = i;
+		}
+		for(int i=0; i<li.size(); i++){
+			lines first = li.get(i);
+			if(spanning(first)){
+				answer += first.height;
+			}
+
+		}
+        return answer;
+    }
+ 
+ 
+}

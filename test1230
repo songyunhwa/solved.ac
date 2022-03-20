@@ -1,0 +1,181 @@
+import java.io.*;
+import java.util.*;
+class Main {
+
+	돌무더기 게임은 여러 돌무더기에서 돌을 하나씩 추가하거나 제거하여, 하나의 돌무더기만 남기는 게임입니다. 게임에서 승리하기 위해서는 마지막에 남은 하나의 돌무더기의 돌 수가 정확히 k개가 되어야 합니다.
+
+처음 주어지는 돌무더기들은 각각 1개 이상의 돌을 갖고 있습니다. 당신은 한 돌무더기를 골라 다음과 같은 행동을 할 수 있습니다.
+
+선택한 돌무더기에 돌을 1개 추가합니다. 동시에, 선택되지 않은 나머지 돌무더기에서 각각 1개씩 돌을 제거합니다.
+돌을 제거해야 할 나머지 돌무더기 중에서 제거할 돌이 없는 경우(=돌 수가 0인 경우), 위 행동은 실행할 수 없습니다.
+예를 들어 3개의 돌무더기에 돌이 각각 [1, 3, 2]개 있고 k가 3인 경우, 게임에서 승리하는 가장 빠른 방법은 아래와 같이 2가지가 있습니다.
+
+첫 번째 - 세 번째 - 세 번째 돌무더기를 차례대로 선택합니다. 각 선택 시에 돌무더기의 돌 수는 [2, 2, 1] - [1, 1, 2] - [0, 0, 3]과 같이 변합니다.
+세 번째 - 첫 번째 - 세 번째 돌무더기를 차례대로 선택합니다. 각 선택 시에 돌무더기의 돌 수는 [0, 2, 3] - [1, 1, 2] - [0, 0, 3]과 같이 변합니다.
+선택하는 돌무더기의 인덱스를 순서대로 나열하여 문자열로 변환하면 1번 방법은 "022", 2번 방법은 "202"입니다. 이를 사전 순으로 정렬했을 때, 가장 뒤에 오는 방법은 "202"입니다.
+
+각 돌무더기의 돌 수를 나타내는 정수 배열 stones, 남겨야 하는 한 돌무더기의 돌 수를 나타내는 정수 k가 매개변수로 주어집니다. 게임에서 승리하기 위한 가장 빠른 방법 중에서, 선택하는 돌무더기의 인덱스를 문자열로 변환했을 때 사전 순으로 가장 뒤에 오는 방법을 return 하도록 solution 함수를 완성해주세요. 만약 어떤 방법으로도 목표를 달성할 수 없다면 "-1"을 return 해주세요.
+	public static class stone{
+        String s;
+		String v;
+		int c =0; //돌 무더기 개수
+		int c1 =0; //돌 총합 개수
+
+        public stone(String s, String v, int c, int c1){
+			this.s= s;
+            this.v = v;
+			this.c = c;
+			this.c1 =c1;
+        }
+    }
+	public static String choice(String s, int t){
+		boolean ch = false; //돌이 하나라도 있는지.
+		String result = "";
+		for(int i=0; i< s.length(); i++){
+			int now = Integer.parseInt(s.substring(i, i+1));
+			if(t == i){
+				result += Integer.toString(now+1);
+			}else {
+				if(now > 0) {
+					ch = true;
+					result += Integer.toString(now-1);
+				}else return "";
+			}
+		}
+		if(ch){
+			return result;
+		}else return "";
+	}
+
+    public static String solution(int[] stones, int k) {
+        String answer = "";
+        Queue<stone> q= new LinkedList<stone>();
+		ArrayList<String> str = new ArrayList<String>();
+        String s =  "";
+		int c=0;
+		int c1=0;
+        for(int i=0; i<stones.length; i++){
+                s += Integer.toString(stones[i]);
+				if(stones[i] > 0){
+					c++;
+				}
+				c1 += stones[i];
+        }
+		int rc = Integer.MAX_VALUE; //가장 빠른 방법
+		q.add(new stone(s, "", c, c1));
+		while(!q.isEmpty()){
+			stone f = q.poll();
+
+			if(f.v.length() > rc) continue;
+			if(f.c == 1 && f.c1 == k) { // 한무더기만 남고	
+				if(rc == f.v.length()) {
+					rc = f.v.length();
+					str.add(f.v);
+				}else if(rc > f.v.length()){
+					str.clear();
+					str.add(f.v);
+					rc=  f.v.length();
+				}
+				continue;
+			}
+			for(int i=0; i<stones.length ; i++){
+				String res = choice(f.s, i); // 선택한 결과값.
+				if(!res.equals("")){
+					c=0;
+					c1=0;
+					for(int j=0; j<res.length(); j++){
+						int now = Integer.parseInt(res.substring(j, j+1));
+							if(now > 0){
+								c++;
+							}
+							c1 += now;
+					}
+					q.add(new stone(res, f.v + Integer.toString(i), c, c1 ));
+				}
+			}
+
+		}
+		Collections.sort(str);
+		if(str.size() > 0)
+		 return str.get(str.size()-1);
+        else return "-1";
+    }
+	public static void main(String[] args) throws Exception {
+	
+		int[] stones = {1,3,2};
+		String result = solution(stones, 3);
+		System.out.println(result);
+	}
+}
+
+
+///paragram 문제
+{"11","111","11","211"}; 있으면 
+두개씩 합쳐져서 (예를들면 1,2 / 3,4) 모두다 지워지는 배열을 만들어야하는데
+첫번째거랑 지워질 수 있는 거 배열에 넣기
+
+
+public static boolean isPal(String a, String b){
+		String c= a+b;
+		boolean pal = true;
+		for(int i=0; i<c.length()/2; i++){
+			if(!c.substring(i,i+1).equals(c.substring(c.length()-1-i,c.length()-i))){
+				pal = false;
+			}
+		}
+		if(pal) return true;
+		pal =true;
+		c = b+a;
+		for(int i=0; i<c.length()/2; i++){
+			if(!c.substring(i,i+1).equals(c.substring(c.length()-1-i,c.length()-i))){
+				pal = false;
+			}
+		}
+		return pal;
+	}
+	public static ArrayList<String> res = new ArrayList<>();
+	public static void bfs(String[] P, int a, int[] del, int cnt) {
+		int c =0; //아직 안지워진 개수
+		int rc = 0; // 1이랑 같이 지워지는 거.
+		for(int i=0; i<del.length ; i++){
+			if(del[i] ==  -1) c++;
+			if(del[i] != -1 && del[i] == del[0]  && i > 0) rc = i;
+		}
+		if(c == 1 || c == 0){
+			if(c == 0 && !res.contains(P[rc])) 
+			res.add(P[rc]);
+			return;
+		}
+		
+		for(int i=0; i<P.length; i++){
+			if(a != i && isPal(P[a], P[i]) && del[i] == -1) {
+				del[i] = cnt+1;
+				del[a] = cnt+1;
+				for(int j=0; j<P.length; j++){
+					if(del[j] == -1) {
+						bfs(P, j, del, cnt+1);
+					}
+				}
+				del[i] = -1;
+				del[a] = -1;
+			}
+		}
+	}
+	public static String[] solution(String []P) {
+        String[] answer;
+		int[] del = new int[P.length];
+		Arrays.fill(del, -1);
+		bfs(P, 0, del, 0);
+		
+		answer = new String[res.size()];
+		for(int i=0; i<res.size(); i++){
+			answer[i] = res.get(i);
+		}
+        return answer;
+    }
+	public static void main(String[] args) throws Exception {
+	
+		String[] schedule ={"11","111","11","211"};
+		String[] answer = solution(schedule);
+	
+	}

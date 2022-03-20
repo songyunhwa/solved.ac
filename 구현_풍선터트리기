@@ -1,0 +1,29 @@
+//2중 for문은 시간초과가 날수 있음!
+
+import java.util.*;
+class Solution {
+public static int solution(int[] a) {
+        int answer = 0;
+		//오른쪽 왼쪽 기준으로 한곳에만 최소값이 자기보다 작은것이 있으면 됨.
+		// 다 큰것 터트리고 하나 남긴다음
+		// 작은 것을 터트리면 되기 때문에.
+		
+		int[] left = new int[a.length];
+		Arrays.fill(left, Integer.MAX_VALUE);
+		left[0] = a[0];
+		int[] right = new int[a.length];
+		Arrays.fill(right, Integer.MAX_VALUE);
+		right[a.length-1] = a[a.length-1];
+		for(int i=1; i<a.length; i++){
+			left[i] = Math.min(left[i-1], a[i]);
+		}
+		for(int i=a.length-2; i>=0; i--){
+			right[i] = Math.min(right[i+1], a[i]);
+		}
+		for(int i=0; i<a.length ; i++){
+			if(!(left[i] < a[i] && right[i] < a[i])) answer++;
+
+		}
+		return answer;
+    }
+}

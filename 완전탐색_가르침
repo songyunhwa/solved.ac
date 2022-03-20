@@ -1,0 +1,66 @@
+
+import java.io.*;
+import java.util.*;
+
+class Main {
+	public static boolean[] alp = new boolean[26];
+	public static String[] strs;
+	public static int result = Integer.MIN_VALUE;
+	public static int n =0;
+	public static int k =0;
+	public static void find(  int i, int cnt){
+		if(cnt == k-5) {
+			int ans = 0;
+			for(int t=0 ;t<strs.length; t++){
+				boolean get =true;
+				for(int tt=0; tt<strs[t].length(); tt++){
+					if(!alp[strs[t].charAt(tt)-'a']){
+						get=false;
+					}
+				}
+				if(get) ans++;
+			}
+			result = Math.max(result, ans);
+		}else {
+
+		    for (int j= i; j < 26; j++) {
+				if (!alp[j]) {
+					alp[j] = true;
+					find(j , cnt + 1);
+					alp[j] = false;
+				}
+			}
+		}
+	}
+   	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String[] str = br.readLine().split(" ");
+		n = Integer.parseInt(str[0]);
+		k = Integer.parseInt(str[1]);
+
+		if(k < 5) {
+			System.out.println(0); return;
+		}
+		if(k==26) {
+			System.out.println(n); return;
+		}
+
+		strs = new String[n];
+		for(int i=0; i<26; i++) alp[i] = false;
+		alp['a' - 'a'] = true;
+		alp['n' - 'a'] = true;
+		alp['t' - 'a'] = true;
+		alp['i' - 'a'] = true;
+		alp['c' - 'a'] = true;
+
+		for(int i=0; i<n; i++){
+			String strr = br.readLine().replaceAll("anta|tica", "");
+			strs[i] = strr;
+		
+		}
+
+		find( 0 , 0);
+		// a n t i c
+		System.out.println(result);
+	}
+}

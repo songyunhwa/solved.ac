@@ -1,0 +1,53 @@
+
+import java.io.*;
+import java.util.*;
+
+class Main {
+	
+	public static float getMedian(int[] arr){
+		float result = 0;
+
+		PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+		PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Comparator.reverseOrder());
+
+		for(int i=0; i<arr.length; i++){
+			//minheap 과 maxheap 사이즈가 같으면
+			if(minHeap.size() == maxHeap.size()){
+				maxHeap.add(arr[i]);
+			}else minHeap.add(arr[i]);
+
+			// minHeap 에는 중간값 이하만 존재하도록 한다.
+			if(minHeap.size() > 0 && maxHeap.size()>0)
+			if(minHeap.peek() < maxHeap.peek()){
+				int a = minHeap.poll();
+				int b = maxHeap.poll();
+				maxHeap.add(a);
+				minHeap.add(b);
+			}
+			if(i % 2 == 0){
+				if( i < arr.length-1)
+				System.out.print(maxHeap.peek() + " ");
+				else System.out.print(maxHeap.peek());
+			}
+		}
+		return result;
+	}
+ 
+   	public static void main(String[] args) throws Exception {
+	 
+
+		Scanner input = new Scanner(System.in);
+		//int s = input.nextInt();
+		//for(int t=0; t<s; t++){
+			int n = input.nextInt(); //배열크기
+
+			int [] arrayInt = new int[n];
+			for(int i=0; i<arrayInt.length;i++){ //배열입력받기
+				arrayInt[i] = input.nextInt();
+			}
+
+			float result = getMedian(arrayInt);
+		//}
+		//System.out.print(result);
+	}
+}
