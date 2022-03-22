@@ -1,0 +1,43 @@
+// 메모리 초과
+import java.io.*;
+import java.util.*;
+
+class Main {
+	public static class line{
+		int n;
+		int cnt;
+		public line(int n, int cnt){
+			this.n= n;
+			this.cnt= cnt;
+		}
+	}
+   	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String[] str = br.readLine().split(" ");
+		int n = Integer.parseInt(str[0]);
+		int m = Integer.parseInt(str[1]);
+		Queue<line> q= new LinkedList<>();
+		q.add(new line(n, 0));
+
+		long[] dp = new long[m*10 +1];
+		Arrays.fill(dp, 1000000000);
+		while(!q.isEmpty()){
+			line f = q.poll();
+
+			if(dp[f.n] < f.cnt) continue;
+			dp[f.n] = f.cnt;
+			if(f.n*2 < dp.length)
+			q.add(new line(f.n* 2, f.cnt+1));
+			if(f.n*10 + 1 <dp.length)
+			q.add(new line(f.n * 10 + 1 , f.cnt+1));
+		}
+		
+		if(dp[m] ==1000000000)
+		{
+			System.out.println(-1);
+			return;
+		}
+		System.out.println(dp[m]+1);
+		
+	}
+}

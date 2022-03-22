@@ -1,0 +1,68 @@
+// dfs 인데 잘 안되면 재귀형식으로 해볼것!
+import java.io.*;
+import java.util.*;
+
+class Main {
+	public static int[][] visit;
+	public static class line{
+		int x;
+		int y;
+		public line(int x, int y){
+			this.x= x;
+			this.y= y;
+		}
+	}
+	public static int[][] dir = {{0, 1}, {0, -1}, {1, 0},{-1, 0}};
+	public static int dfs(String[][] arr, int i , int j){
+
+		int cnt = 1;
+		visit[i][j] = 1;
+			for(int t=0; t<4; t++){
+				int x= i + dir[t][0]; 
+				int y= j + dir[t][1]; 
+
+				if(x>=0 && x<arr.length && y>=0 && y<arr[0].length){
+					if(arr[x][y].equals(arr[i][j]) && visit[x][y] == 0){
+						cnt += dfs(arr, x, y);
+					}
+				}
+			}
+		
+		return cnt;
+	}
+   	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+       String[] strs = br.readLine().split(" ");
+		int n = Integer.parseInt(strs[0]);
+		int m = Integer.parseInt(strs[1]);
+
+		visit = new int[n][m];
+		String[][] arr =new String[n][m];
+		for(int i=0; i<n; i++){
+			String str = br.readLine();
+
+			for(int j=0; j<m ; j++){
+				arr[i][j] = str.substring(j,j+1);
+			}
+		}
+
+		int w_cnt =0;
+		int b_cnt =0;
+		int count=1;
+		for(int i=0; i<n ;i++){
+			for(int j=0; j<m; j++){
+				if(visit[i][j] == 0){
+					int cnt = dfs(arr, i , j);
+					if(arr[i][j].equals("W")){
+						w_cnt+= (cnt*cnt);
+					}else{
+						b_cnt +=  (cnt*cnt);
+					}
+				}
+			}
+		}
+
+		System.out.println(w_cnt + " " + b_cnt);
+	
+	}
+}

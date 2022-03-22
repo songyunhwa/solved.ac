@@ -1,0 +1,30 @@
+
+import java.io.*;
+import java.util.*;
+
+class Main {
+   	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String[] str = br.readLine().split(" ");
+		int n = Integer.parseInt(str[0]);
+		int k =Integer.parseInt(str[1]);
+
+		int max =0 ;
+		int[][] arr = new int[101][100001];
+
+		for(int i=1; i<=n; i++){
+			 str = br.readLine().split(" ");
+			 int m = Integer.parseInt(str[0]);
+			 int c=  Integer.parseInt(str[1]);
+			
+			for(int j=1; j<=100000; j++){
+				
+				arr[i][j] = Math.max(arr[i][j] , arr[i-1][j]);
+				if(j-m >=0)
+				arr[i][j] = Math.max(arr[i][j] , arr[i-1][j-m] +c);
+				
+			}
+		}
+		System.out.println(arr[n][k]);
+	}
+}

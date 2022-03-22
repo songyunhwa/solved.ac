@@ -1,0 +1,61 @@
+
+import java.io.*;
+import java.util.*;
+
+class Main {
+	public static int[][] visit;
+	public static class line{
+		int n;
+		int cnt;
+		int prev;
+		public line(int n, int cnt, int prev){
+			this.n= n;
+			this.cnt= cnt;
+			this.prev = prev;
+		}
+	}
+	
+   	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+       String[] strs = br.readLine().split(" ");
+		int n = Integer.parseInt(strs[0]);
+		int m = Integer.parseInt(strs[1]);
+		
+		Queue<line> q = new LinkedList<>();
+		q.add(new line(n, 0, 0));
+
+		int[] dp = new int[200000];
+		Arrays.fill(dp, 10000);
+		int[] prev = new int[m*2+1];
+		while(!q.isEmpty()){
+			line f = q.poll();
+
+			if(f.n == 200000) continue;
+			if(dp[f.n] < f.cnt) continue;
+			if(dp[f.n] > f.cnt){
+				dp[f.n] = f.cnt;
+				prev[f.n] = f.prev;
+			}
+			if(f.n * 2 <= m*2)
+			q.add(new line(f.n * 2 , f.cnt+1, f.n));
+			if(f.n + 1 <= m*2)
+			q.add(new line(f.n +1 , f.cnt+1, f.n));
+			if(f.n-1 >= 0)
+			q.add(new line(f.n -1 , f.cnt+1, f.n));
+
+
+		}
+
+		System.out.println(dp[m]);
+		int now = m;
+		ArrayList<Integer> arr = new ArrayList<>();
+		while(true){
+			arr.add(now);
+			if(now == n) break;
+			now = prev[now];
+		}
+		for(int i=arr.size()-1  ; i>=0; i--)
+			System.out.print(arr.get(i) + " ");
+	
+	}
+}

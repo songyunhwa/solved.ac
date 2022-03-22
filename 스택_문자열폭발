@@ -1,0 +1,45 @@
+
+import java.io.*;
+import java.util.*;
+
+class Main {
+	public static boolean erase(Stack<String> st, String str1){
+		for(int i=0; i<str1.length(); i++){
+			if(!st.get(st.size()-str1.length()+i).equals(str1.substring(i,i+1))){
+				return false;
+			}
+		}
+		return true;
+	}
+
+   	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String str = br.readLine();
+		String str1 = br.readLine();
+		Stack<String> st = new Stack<>();
+		for(int i=0; i<str.length(); i++){
+			String b=str.substring(i, i+1);
+			st.push(b);
+
+				while(st.size()>=str1.length()){
+					if(erase(st, str1)){
+						for(int k=0; k<str1.length(); k++){
+							st.pop();
+						}
+					}else break;
+				}
+			
+		}
+		if(st.isEmpty()){
+			System.out.println("FRULA");
+			return;
+		}
+		ArrayList<String> arr = new ArrayList<>();
+		while(!st.isEmpty()){
+			arr.add(st.pop());
+		}
+		for(int i=arr.size()-1; i>=0; i--)
+		System.out.print(arr.get(i));
+		
+	}
+}
