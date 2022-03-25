@@ -1,0 +1,59 @@
+import java.io.*;
+import java.util.*;
+
+class Main {
+	public static int a =0;
+	public static int b =0;
+	public static int c =0;
+	public static int d =0;
+	public static int max =Integer.MIN_VALUE;
+	public static int min = Integer.MAX_VALUE;
+	public static void exit(int[] arr, int i, int sum){
+		if( a== 0 && b==0 && c==0 && d==0 ) {
+			max = Math.max(max, sum);
+			min = Math.min(min, sum);
+		}else {
+		if(i == arr.length) return;
+
+		if(a > 0){
+			sum += arr[i]; a--;
+			exit(arr, i+1, sum);
+			sum -= arr[i]; a++;
+		}
+		if(b > 0){
+			sum -= arr[i]; b--;
+			exit(arr, i+1, sum);
+			sum += arr[i]; b++;
+		}
+		if(c > 0){
+			sum *= arr[i]; c--;
+			exit(arr, i+1, sum);
+			sum /= arr[i]; c++;
+		}
+		if(d > 0){
+			sum /= arr[i]; d--;
+			exit(arr, i+1, sum);
+			sum *= arr[i]; d++;
+		}
+	}
+	}
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int n= Integer.parseInt(br.readLine());
+		int[] arr =new int[n];
+		String[] str = br.readLine().split(" ");
+		for(int i=0; i<n ;i++){
+			arr[i] = Integer.parseInt(str[i]);
+		}
+		str = br.readLine().split(" ");
+		a = Integer.parseInt(str[0]);
+		b = Integer.parseInt(str[1]);
+		c = Integer.parseInt(str[2]);
+		d = Integer.parseInt(str[3]);
+
+
+		exit(arr, 1, arr[0]);
+		System.out.println(max);
+		System.out.println(min);
+	}
+}

@@ -1,0 +1,52 @@
+import java.io.*;
+import java.util.*;
+
+class Main {
+	public static void main(String[] args) throws Exception {
+	
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String[] str = br.readLine().split(" ");
+		int v = Integer.parseInt(str[0]);
+		int e = Integer.parseInt(str[1]);
+
+		int[][] arr = new int[v+1][v+1];
+	    for(int i=1; i<=v; i++){
+			for(int j=1; j<=v ; j++){
+				if(i != j)
+				arr[i][j] = Integer.MAX_VALUE;
+			}
+		}
+		for(int i=0; i<e; i++){
+			str = br.readLine().split(" ");
+			int a = Integer.parseInt(str[0]);
+			int b = Integer.parseInt(str[1]);
+			int c = Integer.parseInt(str[2]);
+			arr[a][b] = c;
+		}
+
+		//플로이드 와샬
+		for(int k=1; k<=v; k++){
+			for(int i=1; i<=v; i++){
+				for(int j=1; j<=v; j++){
+					if(i==j) {
+						continue;
+					};
+					if(arr[i][k] + arr[k][j] < arr[i][j])
+					arr[i][j] = arr[i][k] + arr[k][j];
+				}
+			}
+		}
+
+		int ans = Integer.MAX_VALUE;
+		//돌아오는 사이클까지 구함. (정수가 - 까지 포함하나봄.)
+	   // 최소 사이클 중 최솟값을 구한다.
+        for(int i = 1 ; i <= v; i++)
+            ans = Math.min(arr[i][i], ans);
+		
+		if(ans == Integer.MAX_VALUE){
+			ans =-1;
+		}
+		System.out.println(ans);
+		
+	}
+}

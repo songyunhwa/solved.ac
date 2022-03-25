@@ -1,0 +1,22 @@
+import java.io.*;
+import java.util.*;
+
+class Main {
+
+   	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+		long  n = Long.parseLong(br.readLine());
+		int pisano = 1500000; // 피사노 주기
+		long [] dp =new long[pisano+1];
+		dp[0] = 0;
+		dp[1] = 1;
+		int k= (int)n %pisano;
+
+		for(int i=2; i<=k; i++){
+			dp[i] = (dp[i-1] + dp[i-2]) % 1000000;
+		}
+		
+		System.out.println(dp[k] % 1000000);
+	}
+}
