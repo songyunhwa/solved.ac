@@ -1,0 +1,63 @@
+import java.io.*;
+import java.util.*;
+
+class Main {
+	public static int[] parent;
+	public static int[] map;
+
+	public static int find(int a){
+		if(parent[a] == a)return a;
+		else return parent[a] = find(parent[a]);
+	}
+	public static void union(int a ,int b){
+		int i = find(a);
+		int j = find(b);
+
+		if(i < j){
+			parent[j] = i;
+			map[i] += map[j];
+			map[j] = 1;
+		}
+		if(i > j ){
+			parent[i] = j;
+			map[j] += map[i];
+			map[i] =1;
+		}
+	}
+	public static void main(String[] args) throws Exception {
+	
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String[] str;
+		int n = Integer.parseInt(br.readLine());
+		for(int i=0; i<n; i++){
+			int m = Integer.parseInt(br.readLine());
+
+			parent = new int[m*2];
+			map = new int[m*2];
+			for(int j=0; j<m*2; j++){
+				parent[j] = j;
+				map[j] = 1;
+			}
+
+
+			ArrayList<String> list =new ArrayList<String>();
+			list.add("");
+			for(int j=0; j<m; j++){
+				str = br.readLine().split(" ");
+				for(int k=0; k<2; k++){
+					if(!list.contains(str[k])){
+						list.add(str[k]);
+					}
+				}
+				int a= list.indexOf(str[0]);
+				int b= list.indexOf(str[1]);
+
+				union(a,b);
+
+		
+				System.out.println(map[1]);
+			}
+		}
+	}
+	
+}

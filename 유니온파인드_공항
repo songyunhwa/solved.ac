@@ -1,0 +1,44 @@
+import java.io.*;
+import java.util.*;
+
+class Main {
+	public static int[] parent;
+	public static int find(int x){
+		if(parent[x] == x) return x;
+		else return parent[x] = find(parent[x]);
+	}
+	public static void union(int i, int j){
+		int a = find(i);
+		int b = find(j);
+		if(a!=b){
+			parent[a]= b;
+		}
+	}
+	public static void main(String[] args) throws Exception {
+	
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int g= Integer.parseInt(br.readLine());
+		int p= Integer.parseInt(br.readLine());
+
+		int[] arr = new int[p];
+		for(int i=0; i<p; i++){
+			arr[i] =Integer.parseInt(br.readLine());
+		}
+		parent = new int[g+1];
+		for(int i=0; i<=g; i++){
+			parent[i] =i;
+		}
+		int answer=0;
+		for(int i=0; i<p; i++){
+			int par = find(arr[i]); //들어온수 자리에 아무것도 없으면
+			
+			if (par != 0){
+				union(par, par-1);
+				answer++;
+			
+			}else break;
+		}
+		System.out.println(answer);
+
+	}
+}

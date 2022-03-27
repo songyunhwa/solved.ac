@@ -1,0 +1,55 @@
+import java.io.*;
+import java.util.*;
+
+class Main {
+	public static int n =0;
+	public static int[][] arr;
+	public static int[][] dp;
+	// 1 => 1번간거
+	// 1100  => 1,2 번간거
+	public static int find(int now, int visit){
+		// 모든 도시를 다 돌았으면
+		if( visit== (1 << n)-1) {
+			// now에서 0으로 가는 길을 return
+			if(arr[now][0] == 0){
+				return Integer.MAX_VALUE;
+			}
+			return arr[now][0];
+		}
+
+		//이미 값이 들어있으면 return;
+		if(dp[now][visit] != Integer.MAX_VALUE){
+			return dp[now][visit];
+		}
+		for(int i=0; i<n ; i++){
+			// i 로 가는 길이 없거나  i에서 visit 을 방문했다면
+ 			if(arr[now][i] == 0 || (visit & (1 <<n))  != 0){
+				continue;
+			}
+			///now 에서 i 로 가는 것과 i 에서 visit 으로 가는 최소값관 비교
+			dp[now][visit] = Math.min(dp[now][visit] , arr[now][i] + find(i, visit | 1 << i));
+		}
+		return dp[now][visit];
+	}
+	public static void main(String[] args) throws Exception {
+	
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		n= Integer.parseInt(br.readLine());
+
+		arr = new int[n][n];
+		dp = new int[n][n];
+		for(int i=0; i<n; i++){
+			String[] str = br.readLine().split(" ");
+			for(int j=0;j <n; j++){
+				arr[i][j] = Integer.parseInt(str[j]);
+				dp[i][j] =Integer.MAX_VALUE;
+			}
+		}
+		
+		// 1번으로 간다는 것을 뜻함.
+		int answer = find(0 , 1);
+		
+		System.out.println(answer);
+
+	}
+}
