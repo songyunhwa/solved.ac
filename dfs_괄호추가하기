@@ -1,0 +1,57 @@
+
+import java.io.*;
+import java.util.*;
+import java.util.Map.Entry;
+class Main {
+   public static int[] arr;
+   public static char[] oper;
+   public static int m;
+   public static int operate(int a, int b, char op) {
+     int res=0;
+    switch (op) {
+    case '+':
+      res= a + b;
+    case '-':
+      res= a - b;
+    case '*':
+      res= a * b;
+    }
+    return res;
+  }
+  public static int dfs(int n, int sum){
+
+    if(m/2 == n) return sum;
+
+    // n , n+1 계산하고 넘기는거
+    int ret = dfs(n + 1, operate(sum, arr[n+1], oper[n]));
+    if (n + 2 <= m / 2) {
+      int midRes = operate(arr[n + 1], arr[n + 2], oper[n + 1]);
+      ret = Math.max(ret, dfs(n + 2, operate(sum, midRes, oper[n])));
+    }
+    return ret;
+  }
+
+    public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        m = Integer.parseInt(br.readLine());
+        String str = br.readLine();
+        arr = new int[str.length()];
+        oper = new char[str.length()]; 
+        for(int i=0; i<str.length(); i++){
+          if(i%2 ==1) oper[i/2] = str.substring(i, i+1).charAt(0);
+          else arr[i/2] = Integer.parseInt(str.substring(i, i+1));
+      
+        }
+
+        for(int i=0; i<str.length(); i++){
+        System.out.print(arr[i] + " ");
+        }
+        System.out.println();
+        for(int i=0; i<str.length(); i++){
+          System.out.print(oper[i] + " ");
+          }
+          System.out.println();
+
+        System.out.println(dfs(0, arr[0]));
+      }
+}
