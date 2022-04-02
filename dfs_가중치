@@ -1,6 +1,7 @@
 import java.io.*;
 import java.util.*;
-
+//가중치가 a이하로 b 에 가야함.
+// 가야하는 길목에 포함되지 않은 걸 찾아야함.
 class Main {
 
 	// 함수로 불러도 안에 있는 게 이어짐.
