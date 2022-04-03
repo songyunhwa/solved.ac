@@ -19,39 +19,34 @@ class Main {
 	}
 		public static class line1{
 		int x;
-		int[] visit;
+		String path;
 		int size;
-		ArrayList<Integer> arr;
-		public line1(int x, int[] visit, int size){
+		public line1(int x, String path, int size){
 			this.x=x;
-			this.visit= visit;
+			this.path= path;
 			this.size =size;
 		}
 	}
 	public static void dfs(int a, int k){
 		Queue<line1> q= new LinkedList<>();
-		int[] vis =new int[m+1];
-		q.add(new line1(a, vis, 0));
+		q.add(new line1(a, Integer.toString(a)+ " ", 0));
 	
 		while(!q.isEmpty()){
 			line1 f= q.poll();
-			f.visit[f.x]= 1;
 
 			if(f.x==bb && f.size <=k){
-				for(int i=1; i<=m; i++){
-					if(f.visit[i] == 1)
-						visit[i] = 1;
+				System.out.println(f.path);
+				String[] str = f.path.split(" ");
+				for(int i=0; i< str.length; i++){
+					visit[Integer.parseInt(str[i])]= 1;
 				}
 			}else {
 				if(f.size < k)
 				for(int i=1; i<=m ;i++){
-				if(map[f.x][i] == 1  && f.x != i){
-					if(f.visit[i] == 0){
-					q.add(new line1(i, f.visit, f.size+1));
-					}
+				if(map[f.x][i] == 1){
+					q.add(new line1(i, f.path + Integer.toString(i)  +  " ", f.size+1));
 				}
-			
-            }
+           		}
             }
 		}		
 	}
@@ -70,7 +65,7 @@ class Main {
 		}
 		dfs(a, k);
 
-		for(int i=1; i<=n ;i++){
+		for(int i=0; i<=n ;i++){
 			System.out.print(visit[i] + " ");
 			if(visit[i] ==0){
 				for(int j=0; j<ans.size(); j++){
@@ -80,7 +75,8 @@ class Main {
 				}
 			}
 		}
-        System.out.println(ans.size());
+		System.out.println();
+		System.out.println(ans.size());
 		return ans.size();
 
     }
