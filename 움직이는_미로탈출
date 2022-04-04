@@ -1,0 +1,74 @@
+import java.io.*;
+import java.util.*;
+
+class Main {
+	//public static String[][] map ;
+	public static int[][] dir = { {0,0}, {-1,0},{-1,1},{0,1},{1,1},{1,0},{1,-1},{0,-1},{-1,-1} };
+	public static boolean go = false;
+	public static class line{
+		int x;
+		int y;
+		public line(int x, int y){
+			this.x=x;
+			this.y=y;
+		}
+	}
+	public static void move( String[][] map){
+		for(int i=0; i<8; i++){
+			map[7][i] = ".";
+		}
+		for(int i=0; i<7; i++){
+			for(int j=0; j<8; j++){
+				if(map[i][j].equals("#")){
+					map[i+1][j] = "#";
+					map[i][j] = ".";
+				}
+			}
+		}
+	}
+	public static void dfs( String[][] map){
+		Queue<line> q = new LinkedList<line>();
+		// 
+		map[7][0]="a";
+		q.add(new line(7,0));
+		while(!q.isEmpty()){
+			line f = q.poll();
+			if(map[f.x][f.y].equals("#")){
+				continue;
+			}
+			// 좌우 상단
+			if(f.x == 0 && f.y == 7){
+				go = true;
+				return;
+			}
+			for(int i=0; i<9; i++){
+				int x = f.x+ dir[i][0];
+				int y = f.y + dir[i][1];
+				if(x>=0 && x<8 && y>=0 && y<8){
+				if(map[x][y].equals(".")){
+		
+						q.add(new line(x, y));
+				}
+				}
+			}
+			move(map);
+		}
+	
+	}
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String[][] map = new String[8][8];
+		for(int i=0; i<8; i++){
+			String str = br.readLine();
+			for(int j=0; j<8; j++){
+				map[i][j] = str.substring(j, j+1);
+
+			}
+		}
+		dfs(map);
+		if(go)
+		System.out.println(1);
+		else System.out.println(0);
+	}
+	
+}
