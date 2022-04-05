@@ -34,20 +34,12 @@ class Main {
 		if(k==1)visit[Integer.parseInt(str[1])]= 1;
 		if(k>1){
 		for(int i=1; i<str.length; i++){
-			visit[Integer.parseInt(str[i])] =1;
+            visit[Integer.parseInt(str[i])] =1;
 			if(i>=2)
 			union(Integer.parseInt(str[1]), Integer.parseInt(str[i]));
 		}
 		}
-		System.out.println();
-		for(int i=1; i<=n; i++){
-			System.out.print(visit[i] + " ");
-		}
-		System.out.println();
-		for(int i=1; i<=n; i++){
-			System.out.print(map[i] + " ");
-		}System.out.println();
-
+		// 입력으로 들어왔던 것을 union 으로 묶어줘야함.
 		for(int i=0; i<m ; i++){
 			str = br.readLine().split(" ");
 			for(int j=1; j<str.length-1; j++){
@@ -58,16 +50,7 @@ class Main {
 			}
 		}
 	
-		for(int i=1; i<=n; i++){
-			System.out.print(visit[i] + " ");
-		}
-		
-		System.out.println();
-		for(int i=1; i<=n; i++){
-			System.out.print(map[i] + " ");
-		}System.out.println();
-
-
+		// 같은 parent 를 가지고 있으면 visit 1 로 바꿈
 		for(int i=1; i<=n ;i++){
 			if(visit[i] == 1){
 				int r = findParent(i);
