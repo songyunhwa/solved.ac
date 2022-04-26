@@ -1,0 +1,53 @@
+
+import java.io.*;
+import java.util.*;
+import java.util.Map.Entry;
+class Main {
+  public static class Node{
+    int x;
+    int cnt;
+    public Node(int x, int cnt){
+      this.x = x;
+      this.cnt = cnt;
+    }
+  }
+  public static   List<Node>[] arr ;
+  public static int[] visit;
+  public static int result = 0;
+  public static void dfs(int i, int cnt){
+    visit[i] = 1;
+    if(cnt > result ) {
+      result = cnt;
+    }
+    for(int j=0; j<arr[i].size(); j++){
+      Node no = arr[i].get(j);
+      if(visit[no.x] == 0){
+          dfs(no.x, cnt + no.cnt);
+      }
+    }
+  }
+  public static void main(String[] args) throws Exception {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+     int n = Integer.parseInt(br.readLine());
+     
+    arr = new List[n+1];
+    visit = new int[n+1];
+     for(int i=0; i<=n; i++){
+      arr[i]  = new ArrayList<Node>();
+     }
+     for(int i=0; i<n; i++){
+       String[] str= br.readLine().split(" ");
+       int a= Integer.parseInt(str[0]);
+       for(int j=1; j<str.length; j+=2){
+         if(Integer.parseInt(str[j]) == -1) continue;
+         
+          int b = Integer.parseInt(str[j]);
+          int c =Integer.parseInt(str[j+1]);
+          arr[a].add(new Node(b,c));
+          arr[b].add(new Node(a,c));
+       }
+     }
+     dfs(1, 0);
+     System.out.println(result);
+    }
+}
