@@ -1,0 +1,65 @@
+import java.io.*;
+import java.util.*;
+
+class Main {
+	public static class line{
+		int x;
+		int v;
+		int cnt;
+		public line(int x, int v, int cnt){
+			this.x = x;
+			this.v = v;
+			this.cnt = cnt;
+		}
+	}
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String[] str = br.readLine().split(" ");
+		int n = Integer.parseInt(str[0]);
+		int m = Integer.parseInt(str[1]);
+		int k = Integer.parseInt(str[2]);
+
+		List<line>[] arr =new ArrayList[n+1];
+		for(int i=1; i<=n; i++){
+            arr[i] = new ArrayList<>();
+        }
+
+		for(int i=0; i<m; i++){
+			str = br.readLine().split(" ");
+			int a = Integer.parseInt(str[0]);
+			int b = Integer.parseInt(str[1]);
+			int c = Integer.parseInt(str[2]);
+			arr[a].add(new line(b,c, 0));
+			arr[b].add(new line(a,c, 0));
+		}	
+
+		int result = Integer.MAX_VALUE;
+		Queue<line> q = new LinkedList<>();
+		q.add(new line(1, 0,  0));
+
+		int[][] dp = new int[n+1][k+1];
+		for(int i=1; i<=n; i++){
+			Arrays.fill(dp[i], Integer.MAX_VALUE);
+		}
+		while(!q.isEmpty()){
+			line f= q.poll();
+
+			if(f.x == n){
+				result= Math.min(result, f.v);
+				continue;
+			}
+			for(int i=0; i<arr[f.x].size(); i++){
+				if(dp[arr[f.x].get(i).x][f.cnt] > f.v + + arr[f.x].get(i).v){
+					dp[arr[f.x].get(i).x][f.cnt] = f.v + + arr[f.x].get(i).v;
+					q.add(new line(arr[f.x].get(i).x , f.v + arr[f.x].get(i).v, f.cnt));
+				}
+				if(f.cnt == 0 && dp[arr[f.x].get(i).x][f.cnt+1] > f.v){
+					dp[arr[f.x].get(i).x][f.cnt+1] = f.v;
+					q.add(new line(arr[f.x].get(i).x , f.v , f.cnt+1));
+				}
+				
+			}
+		}
+		System.out.println(result);
+	}
+}

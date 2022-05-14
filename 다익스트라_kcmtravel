@@ -1,0 +1,73 @@
+import java.io.*;
+import java.util.*;
+
+class Main {
+	public static class line{
+		int v;
+		int c; 
+		int d;
+		public line(int v, int c, int d){
+			this.v = v;
+			this.c = c;
+			this.d = d;
+		}
+	}
+	public static ArrayList<ArrayList<line>> arr ;
+	public static int n;
+	public static int m;
+	public static int k;
+	public static int result=Integer.MAX_VALUE;
+	public static void dik(int v){
+		Queue<line> q = new LinkedList<>();
+		q.add(new line(v, m, k));
+		
+		while(!q.isEmpty()){
+			line f = q.poll();
+
+			if(f.v == n){
+				result = Math.min(result, k- f.d);
+				return;
+			}
+		
+			for(int i=0; i<arr.get(f.v).size(); i++){
+					if( f.c - arr.get(f.v).get(i).c >=0 && f.d - arr.get(f.v).get(i).d >=0 )
+					q.add(new line(arr.get(f.v).get(i).v, f.c - arr.get(f.v).get(i).c,
+					f.d - arr.get(f.v).get(i).d));
+				
+			}
+		}
+	}
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int t = Integer.parseInt(br.readLine());
+		String[] str ;
+
+
+		for(int i=0; i<t; i++){
+			str = br.readLine().split(" ");
+			n = Integer.parseInt(str[0]);
+			m = Integer.parseInt(str[1]);
+			k = Integer.parseInt(str[2]);
+			arr = new ArrayList<>();
+			for(int j=0; j<=n; j++){
+				arr.add(new ArrayList<>());
+			}
+			for(int j=0; j<n; j++){
+				str = br.readLine().split(" ");
+				int u = Integer.parseInt(str[0]);
+				int v = Integer.parseInt(str[1]);
+				int c = Integer.parseInt(str[2]);
+				int d = Integer.parseInt(str[3]);
+
+				arr.get(u).add(new line(v, c, d));
+			}
+			dik(1);
+			if(result == Integer.MAX_VALUE)
+			System.out.println("Poor KCM");
+			else
+			System.out.println(result);
+			result = Integer.MAX_VALUE;
+		}
+		
+	}
+}

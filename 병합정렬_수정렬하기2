@@ -1,0 +1,61 @@
+import java.io.*;
+import java.util.*;
+
+class Main {
+	public static int[] change;
+	public static int[] arr;
+	
+	public static void mergeSort(int left, int mid, int right){
+		int i, j, k, l;
+		i = left;
+		j = mid+1;
+		k = left;
+	  
+		/* 분할 정렬된 list의 합병 */
+		while(i<=mid && j<=right){
+		  if(arr[i]<=arr[j])
+		  change[k++] = arr[i++];
+		  else
+		  change[k++] = arr[j++];
+		}
+	  
+		// 남아 있는 값들을 일괄 복사
+		if(i>mid){
+		  for(l=j; l<=right; l++)
+		  change[k++] = arr[l];
+		}
+		// 남아 있는 값들을 일괄 복사
+		else{
+		  for(l=i; l<=mid; l++)
+		  change[k++] = arr[l];
+		}
+	  
+		// 배열 sorted[](임시 배열)의 리스트를 배열 list[]로 재복사
+		for(l=left; l<=right; l++){
+			arr[l] = change[l];
+		}
+	  }
+
+	public static void merge(int start, int end){
+		if(start<end) {
+		int mid = (start + end ) /2;
+		merge(start , mid);
+		merge(mid+1, end);
+		mergeSort(start , mid ,end);
+		}
+	}
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int n =Integer.parseInt(br.readLine());
+		 arr =new int[n];
+		for(int i=0; i<n; i++){
+			arr[i] = Integer.parseInt(br.readLine());
+		}
+		change = new int[n];
+
+		merge( 0, n-1);
+		for(int i=0; i<n; i++){
+			System.out.println(arr[i]);
+		}
+	}	
+}

@@ -1,0 +1,38 @@
+import java.io.*;
+import java.util.*;
+
+class Main {
+	public static int[][] arr;
+	public static int dfs(String a, String b){
+		int cnt=0;
+		if(a.length() < b.length()){
+			cnt = Integer.MAX_VALUE;
+			for(int j=0; j<b.length(); j++){
+				int res=0;
+				if(j+a.length() <= b.length()){
+				for(int i=j;i<j+a.length(); i++){
+					if(!a.substring(i-j, i-j+1).equals(b.substring(i, i+1))){
+					res++;
+					}	
+				}
+				cnt = Math.min(cnt, res);	
+			}
+			
+			}
+		}else if(a.length() == b.length()){
+			for(int i=0 ; i<a.length() ;i++){
+				if(!a.substring(i, i+1).equals(b.substring(i, i+1))){
+					cnt++;
+				}
+			}
+		}
+		return cnt;
+	}
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String[] str = br.readLine().split(" ");
+
+		System.out.println(dfs(str[0], str[1]));
+	
+	}
+}
