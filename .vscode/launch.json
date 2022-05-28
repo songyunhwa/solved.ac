@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch bfs_인구이동",
+            "request": "launch",
+            "mainClass": "bfs_인구이동",
+            "projectName": "solved.ac_ad7c4c01"
+        },
+        {
+            "type": "java",
             "name": "Launch Main",
             "request": "launch",
             "mainClass": "Main",

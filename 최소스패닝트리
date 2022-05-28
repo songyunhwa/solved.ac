@@ -1,0 +1,71 @@
+import java.io.*;
+import java.util.*;
+// 	pq=new PriorityQueue<>(); 로 풀면 간단해짐!
+class Main {
+	public static int[] arr;
+	public static int ans;
+	public static ArrayList<ArrayList<line>> list;
+	public static class line implements Comparable<line>{
+		int y;
+		int v;
+		public line(int y ,int v){
+			this.y = y;
+			this.v= v;
+		}
+		@Override
+		public int compareTo(line o){
+			if(this.v > o.v){
+				return 1;
+			}else return -1;
+
+		}
+	}
+	public static boolean union(int i , int j){
+		int a = find(i);
+		int b= find(j);
+		if(a==b) return false;
+		if(a < b) {
+			arr[b] = a;
+		}else arr[a] = b;
+		return true;
+	}
+	public static int find(int parent){
+		if(arr[parent] == parent) return parent;
+		else return arr[parent] = find(arr[parent]);
+	} 
+	
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String[] str = br.readLine().split(" ");
+		int n = Integer.parseInt(str[0]);
+		int m = Integer.parseInt(str[1]);
+		list= new ArrayList<>();
+		for(int i=0; i<=n; i++){
+			list.add(new ArrayList<line>());
+		}
+		for(int i=0; i<m; i++){
+			str = br.readLine().split(" ");
+			int a = Integer.parseInt(str[0]);
+			int b= Integer.parseInt(str[1]);
+			int c = Integer.parseInt(str[2]);
+			list.get(a).add(new line(b,c));
+			Collections.sort(list.get(a));
+
+		}
+		arr = new int[n+1];
+		for(int i=0; i<=n ;i++)arr[i] = i;
+		ans = 0;
+		for(int i=1; i<=n ;i++){
+			if(list.get(i).size() > 0){
+			line next = list.get(i).get(0);
+			if(find(i) != find(next.y)){
+					if(union(i, next.y) ){
+						ans += next.v;
+					}
+				}
+			}
+		}
+		System.out.println(ans);
+		
+	}
+}

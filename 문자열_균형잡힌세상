@@ -1,0 +1,44 @@
+import java.io.*;
+import java.util.*;
+
+class Main {
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String strs;
+		while(true){
+			strs = br.readLine();
+			if(strs.equals(".")){
+				break;
+			}
+
+
+			Stack<String> st = new Stack<>();
+
+			for(int i=0; i<strs.length(); i++){
+				String str = strs.substring(i,i+1);
+				if(str.equals("(") || str.equals("[")){
+					st.push(str);
+				}
+				
+				if(str.equals(")")){
+					if(!st.isEmpty() && st.peek().equals("(")){
+						st.pop();
+					}
+					else {System.out.println("no"); break;}
+				}
+				if(str.equals("]")){
+					if(!st.isEmpty() && st.peek().equals("[")){
+						st.pop();
+					}
+					else {System.out.println("no"); break;}
+				}
+				if(st.size() == 0 && i == strs.length()-1) System.out.println("yes");
+
+			}
+
+
+
+
+		}
+	}
+}
