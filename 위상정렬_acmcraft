@@ -1,0 +1,60 @@
+import java.io.*;
+import java.util.*;
+
+class Main {
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int n = Integer.parseInt(br.readLine());
+		String[] str;
+		for(int i=0; i<n; i++) {
+			str = br.readLine().split(" ");
+			int a = Integer.parseInt(str[0]);
+			int b = Integer.parseInt(str[1]);
+
+			str = br.readLine().split(" ");
+			int[] arr =new int[a+1];
+			for(int j=0; j<a; j++){
+				arr[j+1] = Integer.parseInt(str[j]);
+			}
+			//진입차수
+			int[] edge = new int[a+1];
+			int[] result = new int[a+1];
+			ArrayList<ArrayList<Integer>> arr1 = new ArrayList<>();
+			for(int j=0; j<=a; j++){
+				arr1.add(new ArrayList<Integer>());
+			}
+			for(int j=0; j<b; j++){
+				str = br.readLine().split(" ");
+				for(int k=0; k<2; k++){
+					arr1.get(Integer.parseInt(str[0])).add(Integer.parseInt(str[1]));
+					edge[Integer.parseInt(str[1])]++;
+				}
+			}
+			int x = Integer.parseInt(br.readLine());
+			Queue<Integer> q = new LinkedList<>();
+			q.add(1);
+			for(int j=0; j<=a ;j++){
+				if(edge[j] == 0) result[j] = arr[j];
+			}
+			while(!q.isEmpty()){
+				int f = q.poll();
+				if(f == x) {
+					break;
+				}
+				for(int j=0; j<arr1.get(f).size(); j++){
+					edge[arr1.get(f).get(j)]--;
+					// 의존적인 관계기 때문에 무조건 해주기.
+					result[arr1.get(f).get(j)] = Math.max(result[arr1.get(f).get(j)] , arr[arr1.get(f).get(j)] + result[f]);
+
+					if(edge[arr1.get(f).get(j)] == 0){
+						q.add(arr1.get(f).get(j));
+					}
+				}
+			}
+			System.out.println(result[x]);
+
+
+
+		}
+	}
+}
