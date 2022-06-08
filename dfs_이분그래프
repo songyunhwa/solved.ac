@@ -65,7 +65,7 @@ class Main {
 				} 
 			}
 
-			
+			ㄴ
 		if(error){
 			System.out.println("NO");
 		}else System.out.println("YES");
