@@ -1,0 +1,68 @@
+import java.io.*;
+import java.util.*;
+
+class Main {
+	public static HashMap<String, Integer> map = new HashMap<>();
+	
+	public static void combi(String[] str, int i, int[] ch ,int r){
+		if( r == 0) {
+			String sr = "";
+			for(int j=0; j<ch.length; j++){
+				if(ch[j] == 1) {
+					sr += str[j];
+				}
+			}
+			if(map.containsKey(sr))
+				map.put(sr, map.get(sr) + 1);
+			else map.put(sr, 1);
+
+			return;
+		}
+		else {
+			// i 가 계속 앞으로 가면서 for 문을 돌려줘야됨.@@
+		for(int j=i; j<str.length; j++){
+			if(ch[j] == 0) {
+			ch[j] = 1;
+			combi(str, i+1, ch, r-1);	
+			ch[j] = 0;
+			}
+		}
+		}
+	}
+	public static String[] solution(String[] orders, int[] course) {
+        String[] answer = {};
+		ArrayList<String> ans =new ArrayList<>();
+		for(int r=0; r<course.length; r++){
+		
+			for(int i=0; i<orders.length; i++){
+				String[] str = orders[i].split("");
+				Arrays.sort(str);
+				int[] ch = new int[orders[i].length()];
+				combi(str, 0, ch, course[r]); // 각 조합
+			}
+			List<Map.Entry<String, Integer>> entries = new ArrayList<>(map.entrySet());
+			entries.sort((entry1, entry2) -> entry2.getValue().compareTo(entry1.getValue()));
+			// 두개 이상이고 각 가장 많이 있는 것들만 
+			entries.forEach(e -> {				
+				if( e.getValue() > 1 && e.getValue() == entries.get(0).getValue() && !ans.contains(e.getKey())){
+					ans.add(e.getKey());
+				}
+			});
+			map.clear();
+			
+		}
+		Collections.sort(ans);
+
+		answer = new String[ans.size()];
+		for(int i=0; i<ans.size(); i++){
+			answer[i] = ans.get(i);
+		}
+        return answer;
+    }
+	public static void main(String[] args) throws Exception {
+		String[] ss ={"XYZ", "XWY", "WXA"};
+		int[] cc ={2, 3, 4};
+		System.out.println(solution(ss, cc));
+	}
+}
+
