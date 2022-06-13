@@ -1,0 +1,47 @@
+import java.io.*;
+import java.util.*;
+
+class Main {
+	public static int[] solution(String msg) {
+        int[] answer = {};
+		ArrayList<Integer> ans =  new ArrayList<Integer>();
+		HashMap<String, Integer> arr =new HashMap<>();
+		for(int i='A'; i <='Z'; i++){
+			arr.put(String.valueOf((char)i) , arr.size()+1);
+		}
+		String next = "";
+		String now = msg.substring(0 , 1);
+		int prev =0;
+		for(int j=0; j<msg.length(); j++) {	
+				if(arr.containsKey(now)){
+					prev = arr.get(now);
+				}else {
+					ans.add(prev);
+					System.out.println(now + " " + (arr.size()+1));
+					arr.put(now , (arr.size() + 1));
+					now=  msg.substring(j, j+1);
+					prev = arr.get(now);
+				}
+				if(j+1 < msg.length()){
+					now += msg.substring(j+1 ,j+2);
+				}else {
+					ans.add(arr.get(now));
+					break;
+				}
+		}
+		
+		answer = new int[ans.size()];
+		for(int i=0; i<ans.size(); i++){
+			answer[i] = ans.get(i);
+		}
+        return answer;
+    }
+	public static void main(String[] args) throws Exception {
+		int n= 4;
+
+		int[] ans = solution("KAKAO");
+		for(int i=0; i< ans.length; i++)
+		System.out.println(ans[i]);
+	}
+}
+

@@ -1,0 +1,28 @@
+import java.io.*;
+import java.util.*;
+
+class Main {
+	public static int solution(String word) {
+        int answer = 0;
+		// 각 자리마다 *5 + 1 해주면 된다.
+		int[] pos = { 781 ,156, 31 ,6 , 1};
+
+		String st = "AEIOU";
+		
+		for(int i=0; i<word.length(); i++){
+			String sub = word.substring(i, i+1);
+
+			int index = st.indexOf(sub);
+			answer  += (index * pos[i]) + 1;
+		}
+
+        return answer;
+    }
+	public static void main(String[] args) throws Exception {
+		int n= 4;
+
+		int ans = solution("AAAE");
+		System.out.println(ans);
+	}
+}
+
