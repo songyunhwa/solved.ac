@@ -2,15 +2,17 @@
     // Use IntelliSense to learn about possible attributes.
     // Hover to view descriptions of existing attributes.
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+
     "version": "0.2.0",
     "configurations": [
         {
             "type": "java",
-            "name": "Launch bfs_인구이동",
+            "name": "Launch External Terminal",
             "request": "launch",
-            "mainClass": "bfs_인구이동",
-            "projectName": "solved.ac_ad7c4c01"
+            "console": "externalTerminal",
+            "mainClass": ""
         },
+
         {
             "type": "java",
             "name": "Launch Main",
