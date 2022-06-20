@@ -1,0 +1,64 @@
+
+import java.io.*;
+import java.util.*;
+class Main {
+  public static int[][] dir = {{-1,0}, {0,1},{1, 0} , {0,-1}}; // 북동남서
+  public static int m;
+  public static int n;
+  public static int[][] arr;
+  public static int count = 1;
+
+  public static void dfs(int i, int j, int d){
+     arr[i][j] = -1;
+
+      // 네 방향으로
+      for(int t=0; t<4; t++) {
+      d = (d+3) %4; // 왼쪽 방향으로 변환 (북 -> 서 -> 남 -> 동)
+      int x = i + dir[d][0];
+      int y= j +dir[d][1];
+        // 청소가 안된 곳으로 가야함.
+      if(x>=0 && x <m && y>=0 && y<n && arr[x][y] == 0){
+        count++;
+
+          dfs(x, y, d);
+          return;
+      }
+    }
+      
+
+
+      int back = (d + 2) % 4;
+      int bx=  i + dir[back][0];
+      int by = j + dir[back][1];
+    // 청소 된 곳, 안된 곳 상관없이 감.
+      if(bx >=0 && bx < m && by >=0 && by < n  && arr[bx][by] != 1) 
+      // 방향은 그대로 뒤로 간다.
+        dfs(bx, by ,d);
+      
+    }
+  
+
+  public static void main(String[] args) throws Exception {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    String[] str = br.readLine().split(" ");
+
+    m = Integer.parseInt(str[0]);
+    n = Integer.parseInt(str[1]);
+
+    str = br.readLine().split(" ");
+    int x = Integer.parseInt(str[0]);
+    int y = Integer.parseInt(str[1]);
+    int d = Integer.parseInt(str[2]);
+
+    arr = new int[m][n];
+    for(int i=0; i<m; i++){
+     str = br.readLine().split(" ");
+     for(int j=0; j<n; j++) {
+      arr[i][j] = Integer.parseInt(str[j]);
+     }
+    }
+
+    dfs(x,y, d);
+  System.out.println(count);
+  }
+} 
