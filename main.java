@@ -1,57 +1,8 @@
 import java.io.*;
 import java.util.*;
 class Main {
-    
-public static class Jewel implements Comparable<Jewel>{
-	int weight;
-	int price;
-    int cnt;
-	public Jewel(int weight, int price, int cnt) {
-		this.weight = weight;
-		this.price = price;
-        this.cnt = cnt;
-	}
 
-	@Override
-	public int compareTo(Jewel o) {
-		return this.weight - o.weight; // 작은 게 앞으로 가도록
-	}
-	
-}
   public static void main(String[] args) throws Exception {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    String[] str = br.readLine().split(" "); 
-    int n = Integer.parseInt(str[0]);
-    int k = Integer.parseInt(str[1]);
-    PriorityQueue<Jewel> arr = new PriorityQueue<>();
-    for(int i=0; i<n; i++){
-        str = br.readLine().split(" "); 
-        int m = Integer.parseInt(str[0]);
-        int v = Integer.parseInt(str[1]);
-        arr.add(new Jewel(m , v, i));
-    } 
-    ArrayList<Integer> bags= new ArrayList<>();
-    for (int i = 0; i < k; i++) {
-        int C = Integer.parseInt(br.readLine()); //가방 최대 무게 
-        bags.add(C);
-    }
-    Collections.sort(bags); // 가방 무게 대로 가장 작은 것부터 queue 로 price 가장 큰 것을 구하기
-   PriorityQueue<Integer> q = new PriorityQueue<>((o1, o2) ->  o2 - o1);
-    int answer =0;
-    for(int i=0; i<bags.size(); i++){
-        if(!arr.isEmpty()){
-            if(arr.peek().weight <= bags.get(i)){
-                q.add(arr.poll().price);
-            }else break;
-        }  
-        if(q.isEmpty()){
-           continue;
-        }
-        answer += q.poll();
-
-    }
-   
-    System.out.println(answer);
     
-  }
 } 

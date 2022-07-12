@@ -1,0 +1,27 @@
+import java.io.*;
+import java.util.*;
+class Main {
+    public static void find(int[] arr , int now){
+        if(now >= arr.length) return;
+        arr[now]=1;
+        for(int i=now+1;i < arr.length; i++){
+            if(arr[i-now] != Integer.MAX_VALUE)
+             arr[i] = Math.min(arr[i], arr[i-now] + arr[now]);
+        }    
+    }
+  public static void main(String[] args) throws Exception {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    int str = Integer.parseInt(br.readLine());
+    // 3 5 
+
+    int[] arr = new int[str+1];
+    Arrays.fill(arr,  Integer.MAX_VALUE);
+
+    find(arr ,3);
+    find(arr , 5);
+    if(arr[str] == Integer.MAX_VALUE) 
+    System.out.println(-1);
+    else
+    System.out.println(arr[str]);
+  }
+} 
